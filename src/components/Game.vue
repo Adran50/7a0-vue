@@ -10,29 +10,16 @@ const props = defineProps({
     }
 })
 
-const jugadores = ref([])
-
+const lista = ref([])
+const rival = ref([])
 
 onMounted(async () => {
-    const respuesta = await fetch('http://localhost/php/personajes.php')
-    jugadores.value = await respuesta.json()
-    console.log(jugadores)
-    
-    jugadores.value.forEach(j => {
-        j.usado = false
-    })
-
     sortear()
 })
-console.log(jugadores)
+
 
 const jugadorActivo = ref(null)
 
-const juegoActivo = ref(false)
-
-
-const lista = ref([])
-const rival = ref([])
 
 const botones = ref([
   {numero: 1, jugador: null},
@@ -45,30 +32,34 @@ const tableroCompleto = computed(() => {
 })
     
 
-const sortear = () => {
-  lista.value = []
-  rival.value = []
-  while (lista.value.length<3) {
-    const indice = Math.floor(Math.random() * jugadores.value.length)
-    const jugadorRandom = jugadores.value[indice]
+const sortear = async () => {
 
-    if(jugadorRandom.usado) continue
+    while(true){
+        const respuesta = await fetch('http://localhost/php/obtenerEquipo.php');
+        const datos = await respuesta.json();
 
-    if(lista.value.includes(jugadorRandom)) continue
+        let concurrencia = false
 
-    lista.value.push(jugadorRandom)
-  }
+        botones.value?.forEach(boton => {
+            datos.lista.forEach(jugador => {
+                if((boton.jugador?.id || false) == jugador.id){
+                   concurrencia = true 
+                }
+            });
+        })
 
-  while (rival.value.length<3){
-    const indice2 = Math.floor(Math.random() * jugadores.value.length)
-    const jugadorRandom2 = jugadores.value[indice2]
+        if(concurrencia){
+            continue;
+        }
+        else{
+            lista.value = datos.lista;
+            rival.value = datos.rival;
+            break
+        }
+    }
 
-    if(jugadorRandom2.usado) continue
-
-    if(rival.value.includes(jugadorRandom2)) continue
-
-    rival.value.push(jugadorRandom2)
-  }
+    console.log("Tu equipo:", lista.value);
+    console.log("Equipo rival:", rival.value);
 }
 
 const seleccionarJugador = (jugador) => {
@@ -87,9 +78,9 @@ const asignarJugador = (boton) => {
 
   if(!jugadorActivo.value) return
 
-  jugadorActivo.value.usado = true
-
   boton.jugador = jugadorActivo.value
+
+  jugadorActivo.value = null
 
   sortear()
 }

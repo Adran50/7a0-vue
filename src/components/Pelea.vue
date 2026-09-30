@@ -24,14 +24,15 @@ console.log("Equipo Rival", props.rival)
 
 
 const poderJugador = computed(() => {
-    return props.equipo.reduce((total, j) =>{
-        return total + j.poder
-    }, 0)
-})
+    return props.equipo.reduce((total, j) => {
+        return total + Number(j.poder);
+    }, 0);
+});
+
 
 const poderRival = computed(() => {
     return props.rival.reduce((total, j) => {
-        return total + j.poder
+        return total + Number(j.poder)
     }, 0)
 })
 
@@ -43,6 +44,18 @@ console.log("Poder del equipo rival: ", poderRival.value)
 
 <template>
     <section class="batalla">
+        <div v-if="iniciar" class="mensaje-pantalla">
+            <span v-if="poderJugador > poderRival" class="ganaste">
+                GANASTE
+            </span>
+            <span v-if="poderJugador < poderRival" class="perdiste">
+                PERDISTE BOLOH
+            </span>
+            <span v-if="poderJugador == poderRival" class="empate">
+                EMPATE C GAME F1 Y AL LOBBY
+            </span>
+        </div>
+
         <div class="equipo-propio">
             <div
             v-for="jugador in equipo" :key="jugador.id"
@@ -59,19 +72,6 @@ console.log("Poder del equipo rival: ", poderRival.value)
 
         <div class="resultado">
             <div class="tablero">
-                <div
-                v-if="iniciar"
-                >
-                    <span v-if="poderJugador>poderRival">
-                        GANASTE
-                    </span>
-                    <span v-if="poderJugador<poderRival">
-                        PERDISTE BOLOH
-                    </span>
-                    <span v-if="poderJugador==poderRival">
-                        EMPATE C GAME F1 Y AL LOBBY
-                    </span>
-                </div>
                 <button
                 @click="iniciarBatalla"
                 >Simular Batalla</button>
@@ -105,7 +105,29 @@ console.log("Poder del equipo rival: ", poderRival.value)
         url(/imagenes/img2.png);
         background-size: cover;
         background-repeat: no-repeat;
+        position: relative;
     }
+
+    .mensaje-pantalla {
+        position: absolute;
+        top: 140px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 10;
+        width: 100%;
+        
+        span {
+            font-size: 50px;
+            font-weight: 900;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9);
+            letter-spacing: 2px;
+        }
+    }
+
+    .ganaste { color: #4caf50; }
+    .perdiste { color: #f44336; }
+    .empate { color: #9e7d4b; }
 
     .resultado{
         height: 100%;
