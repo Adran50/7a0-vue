@@ -110,8 +110,16 @@ const enviarEquipo = () =>{
 
                 <button
                 @click="asignarJugador(boton)">
-                {{ boton.jugador ? boton.jugador.poder : boton.numero }}</button>
-                <div class="capa-boton">{{ boton.jugador ? boton.jugador.nombre : "Jugador keke"}}</div>
+                    <div class="imagen-jugador">
+                        <div class="image-wrapper">
+                            <img :src="boton.jugador ? boton.jugador.img : '/suwako.jpeg'">
+                        </div>
+                    </div>
+                </button>
+                <div class="capa-boton">
+                    {{ boton.jugador ? boton.jugador.nombre : "Jugador keke"}}<br>
+                    {{ boton.jugador ? boton.jugador.poder : boton.numero }}
+                </div>
             </div>
         </div>
         <p>Selecciona un personaje y colocalo en el tablero</p>
@@ -151,6 +159,7 @@ const enviarEquipo = () =>{
 <style scoped>
 
 .game{
+    height: 100vh;
     background-image: 
       linear-gradient(rgba(0, 0, 0, 0.76)), 
       url(/imagenes/img2.png);
@@ -163,6 +172,7 @@ const enviarEquipo = () =>{
     padding: 20px 50px;
 
     h2{
+        user-select: none;
         text-align: center;
         color: #9e7d4b;
         text-transform: uppercase;
@@ -178,11 +188,14 @@ const enviarEquipo = () =>{
 
     .tablero{
         width: 100%;
-        height: 100%;
-        background-image: url(/imagenes/img1.png);
+        height: 70%;
+        background-image: linear-gradient(rgba(0, 0, 0, 0.10)), url(/imagenes/img1.png);
         background-position: center -132px;
         background-size: cover;
         position: relative;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 81px;
 
         &::before{
             content: '';
@@ -205,15 +218,36 @@ const enviarEquipo = () =>{
             flex-direction: column;
             gap: 8px;
             
+            .capa-boton{
+                color: #0d1352;
+                background-color: gray;
+            } 
+
             button{
+                background-color: rgba(0, 0, 0, 0.36);
                 position: relative;
                 padding: 30px;
                 border-radius: 100%;
-                border: none;
+                border: 2px solid #4d5fff;
                 display: flex;
                 justify-content: center;
                 align-self: center;
                 cursor: pointer;
+
+                .imagen-jugador{
+                    width: 100px;
+                    height: 100px;
+                    background-color: black;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    img{
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                }
+                
                 &.ocupado{
                     background-color: #666;
                     cursor: default;
@@ -290,9 +324,10 @@ const enviarEquipo = () =>{
     }
 
     .seguir{
+        height: 30%;
         button{
             width: 100%;
-            height: 120px;
+            height: 100%;
         }
     }
 }
