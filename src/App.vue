@@ -8,6 +8,7 @@ import TutorialScreen from "./components/TutorialScreen.vue"
 import ModeSelect from "./components/ModeSelect.vue"
 import Game from "./components/Game.vue"
 import Pelea from "./components/Pelea.vue"
+import Ranking from "./components/Ranking.vue"
 
 const screen = ref("home")
 const gameMode = ref(null)
@@ -52,9 +53,10 @@ function recibirEquipo(datos) {
 
 <template>
 
-    <HomeScreen
+<HomeScreen
     v-if="screen === 'home'"
     @play="openTutorialQuestion"
+    @ranking="screen = 'ranking'"
 />
 
 <TutorialPrompt
@@ -87,6 +89,12 @@ function recibirEquipo(datos) {
     v-else-if="screen === 'pelea'"
     :equipo="equipoJugador"
     :rival="equipoRival"
+    @ver-ranking="screen = 'ranking'"
+/>
+
+<Ranking
+    v-else-if="screen === 'ranking'"
+    @back="goHome"
 />
 
 </template>

@@ -1,14 +1,11 @@
--- Datos generados desde jugadores(pasa esto a base de datos fide).js
--- Compatible con MariaDB / MySQL y la estructura de personajes.sql
-
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-08-2026 a las 02:46:51
+-- Tiempo de generación: 20-10-2026 a las 21:08:25
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,6 +24,36 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `equipo_personajes`
+--
+
+CREATE TABLE `equipo_personajes` (
+  `id` int(11) NOT NULL,
+  `fk_ranking` int(11) NOT NULL,
+  `fk_personaje` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `equipo_personajes`
+--
+
+INSERT INTO `equipo_personajes` (`id`, `fk_ranking`, `fk_personaje`) VALUES
+(1, 1, 63),
+(2, 1, 297),
+(3, 1, 136),
+(7, 3, 159),
+(8, 3, 274),
+(9, 3, 251),
+(10, 4, 266),
+(11, 4, 40),
+(12, 4, 82),
+(13, 5, 95),
+(14, 5, 240),
+(15, 5, 100);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `personaje`
 --
 
@@ -39,199 +66,10 @@ CREATE TABLE `personaje` (
   `universo_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Estructura de tabla para la tabla `tipo`
+-- Volcado de datos para la tabla `personaje`
 --
 
-CREATE TABLE `tipo` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `universo`
---
-
-CREATE TABLE `universo` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `personaje`
---
-ALTER TABLE `personaje`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_personaje_tipo` (`tipo_id`),
-  ADD KEY `universo_id` (`universo_id`) USING BTREE;
-
---
--- Indices de la tabla `tipo`
---
-ALTER TABLE `tipo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `universo`
---
-ALTER TABLE `universo`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `personaje`
---
-ALTER TABLE `personaje`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT de la tabla `tipo`
---
-ALTER TABLE `tipo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT de la tabla `universo`
---
-ALTER TABLE `universo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- Restricciones para tablas volcadas
---
-
---
--- Filtros para la tabla `personaje`
---
-ALTER TABLE `personaje`
-  ADD CONSTRAINT `id_personaje_tipo` FOREIGN KEY (`tipo_id`) REFERENCES `tipo` (`id`),
-  ADD CONSTRAINT `id_personaje_universo` FOREIGN KEY (`universo_id`) REFERENCES `universo` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
--- Universos
-INSERT INTO `universo` (`id`, `nombre`) VALUES
-(1, 'Figuras públicas reales (escala de capacidad física/combate)'),
-(2, 'Ficción argentina — Universo de Hijitus / Manuel García Ferré'),
-(3, 'Otros personajes de la ficción argentina'),
-(4, 'Breaking Bad / Better Call Saul'),
-(5, 'Los Increíbles (The Incredibles)'),
-(6, 'Villanos de Spider-Man'),
-(7, 'Umbrella Academy'),
-(8, 'God of War'),
-(9, 'Los Simpson'),
-(10, 'The Boys'),
-(11, 'Marvel'),
-(12, 'DC'),
-(13, 'Invencible (Invincible)'),
-(14, 'Dragon Ball Z'),
-(15, 'Ben 10');
-
--- Tipos
-INSERT INTO `tipo` (`id`, `nombre`) VALUES
-(1, 'Humano'),
-(2, 'Humano (entrenamiento en judo)'),
-(3, 'Superhéroe (humano con poderes)'),
-(4, 'Humano (niño)'),
-(5, 'Robot'),
-(6, 'Animal antropomórfico'),
-(7, 'Humano (genio villano)'),
-(8, 'Humano (niña)'),
-(9, 'Humano (gaucho)'),
-(10, 'Humano (mercenario)'),
-(11, 'Humano (fuerza sobrehumana)'),
-(12, 'Animal (caballo)'),
-(13, 'Superhumano'),
-(14, 'Humano (tecnología avanzada)'),
-(15, 'Humano (criminal experto)'),
-(16, 'Humano potenciado'),
-(17, 'Simbionte / Superhumano'),
-(18, 'Superhumano (mutación)'),
-(19, 'Humano (tecnología/ilusionismo)'),
-(20, 'Humano potenciado (tecnología)'),
-(21, 'Humano (fuerza/criminal)'),
-(22, 'Superhumano (traje/mutación)'),
-(23, 'Humano (tecnología)'),
-(24, 'Humano (técnica)'),
-(25, 'Superhumano (vampiro viviente)'),
-(26, 'Humano entrenado'),
-(27, 'Humano/Alienígena'),
-(28, 'Humano (Comisión)'),
-(29, 'Semidiós'),
-(30, 'Dios'),
-(31, 'Diosa'),
-(32, 'Enano semidivino'),
-(33, 'Humano mágico'),
-(34, 'Superhumano (Compuesto V)'),
-(35, 'Superhumano (inteligencia potenciada)'),
-(36, 'Superhumano (mutación accidental)'),
-(37, 'Superhumano (supersoldado)'),
-(38, 'Mutante'),
-(39, 'Humano (mago)'),
-(40, 'Mutante / Diosa del caos'),
-(41, 'Androide'),
-(42, 'Superhumano cósmico'),
-(43, 'Eterno (Titán)'),
-(44, 'Mutante cósmica (Fénix)'),
-(45, 'Entidad sobrenatural'),
-(46, 'Humano (avatar divino)'),
-(47, 'Entidad cósmica'),
-(48, 'Inteligencia artificial'),
-(49, 'Humano potenciado (viajero del tiempo)'),
-(50, 'Extraterrestre (kryptoniano)'),
-(51, 'Semidiosa (amazona)'),
-(52, 'Humano potenciado (anillo)'),
-(53, 'Semidiós (atlante)'),
-(54, 'Humano cibernético'),
-(55, 'Extraterrestre'),
-(56, 'Humano potenciado (Venom)'),
-(57, 'Humano (toxinas)'),
-(58, 'Dios (Nuevo Dios)'),
-(59, 'Humano (tecnología/genio)'),
-(60, 'Extraterrestre (bioarma)'),
-(61, 'Semidiosa (demonio)'),
-(62, 'Metahumano'),
-(63, 'Humano (tecnología alienígena)'),
-(64, 'Viltrumita (híbrido)'),
-(65, 'Viltrumita'),
-(66, 'Humano (cuerpo artificial)'),
-(67, 'Inmortal / Superhumano'),
-(68, 'Superhumano (velocidad)'),
-(69, 'Humano potenciado (dimensional)'),
-(70, 'Saiyajin'),
-(71, 'Saiyajin/Humano híbrido'),
-(72, 'Namekiano'),
-(73, 'Entidad mágica'),
-(74, 'Bioandroide'),
-(75, 'Androide (humano modificado)'),
-(76, 'Androide artificial'),
-(77, 'Humano (cíborg)'),
-(78, 'Dios de la Destrucción'),
-(79, 'Ángel (deidad)'),
-(80, 'Saiyajin (fusión)'),
-(81, 'Humano (alienígena vía Omnitrix)'),
-(82, 'Humano (mágico)'),
-(83, 'Humano potenciado (absorción)'),
-(84, 'Extraterrestre (vía Omnitrix)'),
-(85, 'Extraterrestre (transformación)'),
-(86, 'Extraterrestre (transformación, cósmico)');
-
--- Personajes
 INSERT INTO `personaje` (`id`, `nombre`, `img`, `poder`, `tipo_id`, `universo_id`) VALUES
 (1, 'Lionel Messi', '/jugadores/1_messi.avif', 14, 1, 1),
 (2, 'Guido Kaczka', '/jugadores/2_guido.avif', 6, 1, 1),
@@ -378,7 +216,7 @@ INSERT INTO `personaje` (`id`, `nombre`, `img`, `poder`, `tipo_id`, `universo_id
 (143, 'Soldier Boy', '/jugadores/143_soldier boy.avif', 85, 34, 10),
 (144, 'Kimiko', '/jugadores/144_kimiko.avif', 58, 34, 10),
 (145, 'Frenchie', '/jugadores/145_frenchie.avif', 18, 1, 10),
-(146, 'Mother''s Milk', '/jugadores/146_mothers milk.avif', 18, 1, 10),
+(146, 'Mother\'s Milk', '/jugadores/146_mothers milk.avif', 18, 1, 10),
 (147, 'Stormfront', '/jugadores/147_stormfront.avif', 82, 34, 10),
 (148, 'Victoria Neuman', '/jugadores/148_victoria neuman.avif', 80, 34, 10),
 (149, 'Firecracker', '/jugadores/149_firecracker.avif', 35, 34, 10),
@@ -557,4 +395,255 @@ INSERT INTO `personaje` (`id`, `nombre`, `img`, `poder`, `tipo_id`, `universo_id
 (326, 'AmpFibian', '/jugadores/326_ampfiibian.avif', 84, 85, 15),
 (327, 'Clockwork', '/jugadores/327_clockwork.avif', 99, 86, 15);
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `ranking`
+--
+
+CREATE TABLE `ranking` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(100) NOT NULL,
+  `poder` int(3) NOT NULL,
+  `fecha` date NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `ranking`
+--
+
+INSERT INTO `ranking` (`id`, `usuario`, `poder`, `fecha`) VALUES
+(1, 'keke', 216, '2026-10-20'),
+(3, 'kke', 281, '2026-10-20'),
+(4, 'gyuguygyu', 192, '2026-10-20'),
+(5, 'wow', 278, '2026-10-20');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo`
+--
+
+CREATE TABLE `tipo` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tipo`
+--
+
+INSERT INTO `tipo` (`id`, `nombre`) VALUES
+(1, 'Humano'),
+(2, 'Humano (entrenamiento en judo)'),
+(3, 'Superhéroe (humano con poderes)'),
+(4, 'Humano (niño)'),
+(5, 'Robot'),
+(6, 'Animal antropomórfico'),
+(7, 'Humano (genio villano)'),
+(8, 'Humano (niña)'),
+(9, 'Humano (gaucho)'),
+(10, 'Humano (mercenario)'),
+(11, 'Humano (fuerza sobrehumana)'),
+(12, 'Animal (caballo)'),
+(13, 'Superhumano'),
+(14, 'Humano (tecnología avanzada)'),
+(15, 'Humano (criminal experto)'),
+(16, 'Humano potenciado'),
+(17, 'Simbionte / Superhumano'),
+(18, 'Superhumano (mutación)'),
+(19, 'Humano (tecnología/ilusionismo)'),
+(20, 'Humano potenciado (tecnología)'),
+(21, 'Humano (fuerza/criminal)'),
+(22, 'Superhumano (traje/mutación)'),
+(23, 'Humano (tecnología)'),
+(24, 'Humano (técnica)'),
+(25, 'Superhumano (vampiro viviente)'),
+(26, 'Humano entrenado'),
+(27, 'Humano/Alienígena'),
+(28, 'Humano (Comisión)'),
+(29, 'Semidiós'),
+(30, 'Dios'),
+(31, 'Diosa'),
+(32, 'Enano semidivino'),
+(33, 'Humano mágico'),
+(34, 'Superhumano (Compuesto V)'),
+(35, 'Superhumano (inteligencia potenciada)'),
+(36, 'Superhumano (mutación accidental)'),
+(37, 'Superhumano (supersoldado)'),
+(38, 'Mutante'),
+(39, 'Humano (mago)'),
+(40, 'Mutante / Diosa del caos'),
+(41, 'Androide'),
+(42, 'Superhumano cósmico'),
+(43, 'Eterno (Titán)'),
+(44, 'Mutante cósmica (Fénix)'),
+(45, 'Entidad sobrenatural'),
+(46, 'Humano (avatar divino)'),
+(47, 'Entidad cósmica'),
+(48, 'Inteligencia artificial'),
+(49, 'Humano potenciado (viajero del tiempo)'),
+(50, 'Extraterrestre (kryptoniano)'),
+(51, 'Semidiosa (amazona)'),
+(52, 'Humano potenciado (anillo)'),
+(53, 'Semidiós (atlante)'),
+(54, 'Humano cibernético'),
+(55, 'Extraterrestre'),
+(56, 'Humano potenciado (Venom)'),
+(57, 'Humano (toxinas)'),
+(58, 'Dios (Nuevo Dios)'),
+(59, 'Humano (tecnología/genio)'),
+(60, 'Extraterrestre (bioarma)'),
+(61, 'Semidiosa (demonio)'),
+(62, 'Metahumano'),
+(63, 'Humano (tecnología alienígena)'),
+(64, 'Viltrumita (híbrido)'),
+(65, 'Viltrumita'),
+(66, 'Humano (cuerpo artificial)'),
+(67, 'Inmortal / Superhumano'),
+(68, 'Superhumano (velocidad)'),
+(69, 'Humano potenciado (dimensional)'),
+(70, 'Saiyajin'),
+(71, 'Saiyajin/Humano híbrido'),
+(72, 'Namekiano'),
+(73, 'Entidad mágica'),
+(74, 'Bioandroide'),
+(75, 'Androide (humano modificado)'),
+(76, 'Androide artificial'),
+(77, 'Humano (cíborg)'),
+(78, 'Dios de la Destrucción'),
+(79, 'Ángel (deidad)'),
+(80, 'Saiyajin (fusión)'),
+(81, 'Humano (alienígena vía Omnitrix)'),
+(82, 'Humano (mágico)'),
+(83, 'Humano potenciado (absorción)'),
+(84, 'Extraterrestre (vía Omnitrix)'),
+(85, 'Extraterrestre (transformación)'),
+(86, 'Extraterrestre (transformación, cósmico)');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `universo`
+--
+
+CREATE TABLE `universo` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `universo`
+--
+
+INSERT INTO `universo` (`id`, `nombre`) VALUES
+(1, 'Figuras públicas reales (escala de capacidad física/combate)'),
+(2, 'Ficción argentina — Universo de Hijitus / Manuel García Ferré'),
+(3, 'Otros personajes de la ficción argentina'),
+(4, 'Breaking Bad / Better Call Saul'),
+(5, 'Los Increíbles (The Incredibles)'),
+(6, 'Villanos de Spider-Man'),
+(7, 'Umbrella Academy'),
+(8, 'God of War'),
+(9, 'Los Simpson'),
+(10, 'The Boys'),
+(11, 'Marvel'),
+(12, 'DC'),
+(13, 'Invencible (Invincible)'),
+(14, 'Dragon Ball Z'),
+(15, 'Ben 10');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `equipo_personajes`
+--
+ALTER TABLE `equipo_personajes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_ranking` (`fk_ranking`),
+  ADD KEY `fk_personaje` (`fk_personaje`);
+
+--
+-- Indices de la tabla `personaje`
+--
+ALTER TABLE `personaje`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_personaje_tipo` (`tipo_id`),
+  ADD KEY `universo_id` (`universo_id`) USING BTREE;
+
+--
+-- Indices de la tabla `ranking`
+--
+ALTER TABLE `ranking`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipo`
+--
+ALTER TABLE `tipo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `universo`
+--
+ALTER TABLE `universo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `equipo_personajes`
+--
+ALTER TABLE `equipo_personajes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de la tabla `personaje`
+--
+ALTER TABLE `personaje`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
+
+--
+-- AUTO_INCREMENT de la tabla `ranking`
+--
+ALTER TABLE `ranking`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo`
+--
+ALTER TABLE `tipo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+
+--
+-- AUTO_INCREMENT de la tabla `universo`
+--
+ALTER TABLE `universo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `equipo_personajes`
+--
+ALTER TABLE `equipo_personajes`
+  ADD CONSTRAINT `equipo_personajes_ibfk_1` FOREIGN KEY (`fk_ranking`) REFERENCES `ranking` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `equipo_personajes_ibfk_2` FOREIGN KEY (`fk_personaje`) REFERENCES `personaje` (`id`);
+
+--
+-- Filtros para la tabla `personaje`
+--
+ALTER TABLE `personaje`
+  ADD CONSTRAINT `id_personaje_tipo` FOREIGN KEY (`tipo_id`) REFERENCES `tipo` (`id`),
+  ADD CONSTRAINT `id_personaje_universo` FOREIGN KEY (`universo_id`) REFERENCES `universo` (`id`);
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

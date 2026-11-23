@@ -8,6 +8,8 @@ const iniciarBatalla = () => {
     iniciar.value = !iniciar.value
 }
 
+const emit = defineEmits(["ver-ranking"])
+
 const props = defineProps({
     equipo: {
         type: Array,
@@ -35,6 +37,47 @@ const poderRival = computed(() => {
         return total + Number(j.poder)
     }, 0)
 })
+
+
+const usuario = ref("")
+
+const publicarRanking = async () => {
+    const nombre = usuario.value.trim()
+
+    if (!nombre) {
+        alert("Escribí tu nombre para publicar el ranking.")
+        return
+    }
+
+    try {
+        const respuesta = await fetch(
+            "http://localhost/php/guardarRanking.php",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    usuario: nombre,
+                    poder: poderJugador.value,
+                    equipo: props.equipo.map(p => p.id)
+                })
+            }
+        )
+
+        const datos = await respuesta.json()
+
+        if (!respuesta.ok) {
+            throw new Error(datos.error || "Error al guardar")
+        }
+
+        emit("ver-ranking")
+
+    } catch (error) {
+        console.error(error)
+        alert("No se pudo publicar el resultado.")
+    }
+}
 
 console.log("Poder del jugador: ", poderJugador.value)
 console.log("Poder del equipo rival: ", poderRival.value)
@@ -72,9 +115,23 @@ console.log("Poder del equipo rival: ", poderRival.value)
 
         <div class="resultado">
             <div class="tablero">
-                <button
-                @click="iniciarBatalla"
-                >Simular Batalla</button>
+                <template v-if="!iniciar">
+                    <button
+                    @click="iniciarBatalla"
+                    >Simular Batalla</button>
+                </template>
+                
+                <template v-else>
+                    <input
+                    v-model="usuario"
+                    type="text"
+                    maxlength="100"
+                    placeholder="Tu nombre"
+                    >
+                    <button
+                    @click="publicarRanking"
+                    >Publicar Ranking y ver el ranking de los demas</button>
+                </template>
             </div>
         </div>
 

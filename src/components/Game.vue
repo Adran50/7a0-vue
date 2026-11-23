@@ -221,6 +221,7 @@ const enviarEquipo = () =>{
             .capa-boton{
                 color: #0d1352;
                 background-color: gray;
+                text-align: center;
             } 
 
             button{

@@ -1,5 +1,5 @@
 <script setup>
-const emit = defineEmits(["play"])
+const emit = defineEmits(["play", "ranking"])
 </script>
 
 <template>
@@ -14,6 +14,13 @@ const emit = defineEmits(["play"])
             @click="emit('play')"
         >
             JUGAR
+        </button>
+
+        <button
+            class="red-button"
+            @click="emit('ranking')"
+        >
+            VER RANKING
         </button>
 
     </section>
@@ -35,6 +42,10 @@ const emit = defineEmits(["play"])
     text-shadow:
     5px 5px white,
     10px 10px black;
+}
+
+.red-button + .red-button{
+    margin-top: 20px;
 }
 
 </style>
