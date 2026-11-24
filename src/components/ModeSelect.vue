@@ -1,150 +1,149 @@
 <script setup>
+import AppIcon from "./AppIcon.vue"
+
 const emit = defineEmits(["select", "back"])
 </script>
 
 <template>
+  <section class="screen">
+    <button class="btn-back" @click="emit('back')">
+      <AppIcon name="back" size="14" />
+      Volver
+    </button>
 
-<section class="screen">
+    <div class="mode-box">
+      <h1 class="title">Modo de Juego</h1>
+      <p class="subtitle">Elige el tipo de enfrentamiento</p>
 
-    <div
-        class="back"
-        @click="emit('back')"
-    >
-        ←
+      <div class="mode-options">
+        <!-- Duelo 1 vs 1 -->
+        <div class="card mode-card" @click="emit('select', 'duel')">
+          <div class="mode-icon-box">
+            <AppIcon name="user" size="24" />
+          </div>
+          <div class="mode-info">
+            <h3 class="mode-name">Duelo (1 vs 1)</h3>
+            <p class="mode-desc">Combate individual rápido entre un personaje y un rival sorteado.</p>
+          </div>
+          <button class="btn-secondary mode-action" type="button">
+            Elegir
+            <AppIcon name="play" size="12" />
+          </button>
+        </div>
+
+        <!-- Equipos 3 vs 3 -->
+        <div class="card mode-card" @click="emit('select', 'teams')">
+          <div class="mode-icon-box">
+            <AppIcon name="users" size="24" />
+          </div>
+          <div class="mode-info">
+            <h3 class="mode-name">Equipos (3 vs 3)</h3>
+            <p class="mode-desc">Arma una alineación de tres combatientes sumando puntuaciones contra el rival.</p>
+          </div>
+          <button class="btn-secondary mode-action" type="button">
+            Elegir
+            <AppIcon name="play" size="12" />
+          </button>
+        </div>
+
+        <!-- Modo Torneo -->
+        <div class="card mode-card featured" @click="emit('select', 'tournament')">
+          <div class="mode-icon-box accent">
+            <AppIcon name="tournament" size="24" />
+          </div>
+          <div class="mode-info">
+            <h3 class="mode-name">Torneo Eliminatorio</h3>
+            <p class="mode-desc">Supera 3 rondas eliminatorias (Cuartos, Semifinal y Final) para alcanzar la corona.</p>
+          </div>
+          <button class="btn-primary mode-action" type="button">
+            Elegir
+            <AppIcon name="play" size="12" />
+          </button>
+        </div>
+      </div>
     </div>
-
-    <h1 class="title">
-        SELECCIONÁ UN MODO
-    </h1>
-
-    <div class="mode-buttons">
-
-        <button class="mode-button"  @click="emit('select','duel')">
-            DUELO
-        </button>
-
-        <button class="mode-button" @click="emit('select','teams')">
-            EQUIPOS
-        </button>
-
-        <button class="mode-button" @click="emit('select','tournament')">
-            TORNEO
-        </button>
-
-    </div>
-
-</section>
-
+  </section>
 </template>
 
 <style scoped>
-
-
-.title{
-    margin-top:60px;
-
-    font-size:54px;
-
-    margin-bottom:80px;
-
-    font-weight:900;
-
-    text-align:center;
+.mode-box {
+  max-width: 580px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.mode-buttons{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:35px;
-
-    margin-bottom:60px;
+.mode-options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
 }
 
-.mode-button{
-
-    width:420px;
-
-    height:95px;
-
-    font-size:34px;
-
-    font-weight:bold;
-
-    color:white;
-
-    background:#d71d1d;
-
-    border:none;
-
-    cursor:pointer;
-
-    clip-path:polygon(
-        8% 0,
-        92% 0,
-        100% 20%,
-        95% 50%,
-        100% 80%,
-        92% 100%,
-        8% 100%,
-        0 80%,
-        5% 50%,
-        0 20%
-    );
-
-    transition:.25s;
-
-    box-shadow:8px 8px black;
-
-    animation:appear .6s;
+.mode-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: all 0.18s ease;
 }
 
-.mode-button:hover{
-
-    transform:scale(1.05);
-
-    background:#ff3535;
+.mode-card:hover {
+  border-color: var(--border-dark);
+  transform: translateY(-2px);
 }
 
-.mode-button:active{
-
-    transform:scale(.95);
+.mode-card.featured {
+  border-color: #fca5a5;
+  background-color: #ffffff;
 }
 
-@keyframes appear{
-
-    from{
-
-        opacity:0;
-
-        transform:translateY(40px);
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-    }
-
+.mode-card.featured:hover {
+  border-color: var(--accent);
 }
 
-@media(max-width:700px){
-
-.mode-button{
-
-    width:90vw;
-
-    font-size:28px;
+.mode-icon-box {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius);
+  background-color: #f3f4f6;
+  flex-shrink: 0;
 }
 
-.title{
-
-    font-size:38px;
+.mode-icon-box.accent {
+  background-color: #fee2e2;
+  color: var(--accent);
 }
 
+.mode-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
 }
 
+.mode-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.mode-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
+.mode-action {
+  min-width: 95px;
+  padding: 8px 14px;
+  font-size: 13px;
+  gap: 6px;
+}
 </style>

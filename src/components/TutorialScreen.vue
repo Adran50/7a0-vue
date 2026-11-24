@@ -1,203 +1,107 @@
 <script setup>
-const emit = defineEmits([
-  "continue",
-  "back"
-])
+import AppIcon from "./AppIcon.vue"
+
+const emit = defineEmits(["continue", "back"])
 </script>
 
 <template>
-
-<section class="screen">
-
-    <div
-        class="back"
-        @click="emit('back')"
-    >
-        ←
-    </div>
-
-    <h1 class="title">
-        ¿CÓMO JUGAR?
-    </h1>
-
-    <div class="cards">
-
-        <div class="card">
-
-            <div class="card-title">
-                1) Duelos
-            </div>
-
-            <p>
-                "Eligiras 1 personaje de 3 opciones aleatorias
-
-                Al elegir la dificultad:
-                
-            </p>
-            <ul>
-                
-                <li>Facil: Tu personaje combatirá con 3 adversarios</li>
-    
-                <li>Normal: Tu personaje combatirá con 5 adversarios</li>
-    
-                <li>Dificil: Tu personaje combatirá con 10 adversarios</li>
-    
-                <li>Infinito: Tu personaje combatirá con todos los adversarios que aguante</li>
-            </ul>
-
-
-        </div>
-
-        <div class="card">
-
-            <div class="card-title">
-                2) Equipos
-            </div>
-
-            <p>
-                Eligiras 3 personajes de 9 opciones aleatorias
-
-                Al elegir la dificultad:
-
-            </p>
-            <ul>
-                
-                <li>Facil: Tu equipo combatirá contra un solo equipo enemigo</li>
-    
-                <li>Normal: Tu equipo combatira con 3 equipos enemigos</li>
-    
-                <li>Dificil: Tu equipo combatira con 5 equipos enemigos</li>
-    
-                <li>Infinito: Tu personaje combatirá con todos los equipos enemigos que aguante</li>
-            </ul>
-
-        </div>
-
-        <div class="card">
-
-            <div class="card-title">
-                3) TORNEO
-            </div>
-
-            <p>
-                Se preparan 16 personajes que combatitan para ver quien queda como el último en pie
-
-                Al elegir el tipo de torneo:
-            </p>
-            <ul>
-                
-                <li>Clásico: Los 16 personajes se eligen de forma completamente aleatoria</li>
-    
-                <li>Personalizado: Los 16 personajes los elegirás vos</li>
-            </ul>
-
-        </div>
-
-
-
-    </div>
-
-    <button
-        class="red-button continue"
-        @click="emit('continue')"
-    >
-        CONTINUAR
+  <section class="screen tutorial-screen">
+    <button class="btn-back" @click="emit('back')">
+      <AppIcon name="back" size="14" />
+      Volver
     </button>
 
-</section>
+    <h1 class="title">Guía de Juego</h1>
+    <p class="subtitle">Conoce los modos disponibles y el sistema de probabilidades</p>
 
+    <div class="cards-grid">
+      <div class="card tutorial-card">
+        <div class="card-icon">
+          <AppIcon name="user" size="20" />
+        </div>
+        <h3 class="card-heading">Duelo (1 vs 1)</h3>
+        <p class="card-text">
+          Combate directo y rápido. Eliges 1 personaje y te enfrentas a un contrincante al azar.
+        </p>
+      </div>
+
+      <div class="card tutorial-card">
+        <div class="card-icon">
+          <AppIcon name="users" size="20" />
+        </div>
+        <h3 class="card-heading">Equipos (3 vs 3)</h3>
+        <p class="card-text">
+          Estrategia por turnos. Asignas 3 personajes en el tablero sumando sus poderes contra el equipo rival.
+        </p>
+      </div>
+
+      <div class="card tutorial-card">
+        <div class="card-icon">
+          <AppIcon name="tournament" size="20" />
+        </div>
+        <h3 class="card-heading">Torneo Eliminatorio</h3>
+        <p class="card-text">
+          Cuadro de 8 participantes. Eliges a tu campeón y debes ganar Cuartos, Semifinal y la Gran Final para coronarte.
+        </p>
+      </div>
+
+      <div class="card tutorial-card">
+        <div class="card-icon">
+          <AppIcon name="dice" size="20" />
+        </div>
+        <h3 class="card-heading">Sistema de Probabilidad</h3>
+        <p class="card-text">
+          Cada personaje tiene un nivel de poder. A mayor poder total frente a tu rival, mayor es tu porcentaje de victoria.
+        </p>
+      </div>
+    </div>
+
+    <button class="btn-primary continue-btn" @click="emit('continue')">
+      Continuar
+      <AppIcon name="play" size="14" />
+    </button>
+  </section>
 </template>
 
 <style scoped>
-
-
-.title{
-    margin-top:60px;
-
-    font-size:54px;
-
-    margin-bottom:60px;
-
-    font-weight:900;
+.tutorial-screen {
+  justify-content: flex-start;
+  padding-top: 48px;
 }
 
-.cards{
-    display:flex;
-
-    gap:35px;
-
-    margin:0 10px 60px 10px;
-
-    flex-wrap:wrap;
-
-    justify-content:center;
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: 24px;
 }
 
-.card{
-    width:30%;
-    background:white;
-
-    border:5px solid black;
-
-    border-radius:22px;
-
-    padding:30px;
-
-    box-shadow:10px 10px black;
-
-    transition:.25s;
+.tutorial-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
 }
 
-.card:hover{
-
-    transform:translateY(-8px);
+.card-icon {
+  color: var(--accent);
 }
 
-.card-title{
-
-    background:#d81d1d;
-
-    color:white;
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    text-align:center;
-
-    padding:12px;
-
-    border-radius:12px;
-
-    margin-bottom:25px;
+.card-heading {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
 }
 
-.card p{
-
-    font-size:19px;
-
-    line-height:1.7;
-
-    text-align:center;
+.card-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.45;
 }
 
-.continue{
-    width:320px;
-
-    margin-bottom:60px;
+.continue-btn {
+  margin-top: 8px;
 }
-
-@media(max-width:1000px){
-
-.card{
-    width:340px;
-}
-
-.title{
-
-    font-size:40px;
-}
-
-}
-
 </style>

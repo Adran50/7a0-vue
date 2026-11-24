@@ -1,51 +1,56 @@
 <script setup>
+import AppIcon from "./AppIcon.vue"
+
 const emit = defineEmits(["play", "ranking"])
 </script>
 
 <template>
-    <section class="screen">
+  <section class="screen">
+    <div class="home-box">
+      <h1 class="title">VERSUS</h1>
+      <p class="subtitle">Juego de combates por turnos y probabilidades</p>
 
-        <h1 class="logo">
-            VERSUS!
-        </h1>
-
-        <button
-            class="red-button"
-            @click="emit('play')"
-        >
-            JUGAR
+      <div class="actions">
+        <button class="btn-primary" @click="emit('play')">
+          <AppIcon name="play" size="16" />
+          Jugar
         </button>
-
-        <button
-            class="red-button"
-            @click="emit('ranking')"
-        >
-            VER RANKING
+        <button class="btn-secondary" @click="emit('ranking')">
+          <AppIcon name="trophy" size="16" />
+          Ver Ranking
         </button>
-
-    </section>
+      </div>
+    </div>
+  </section>
 </template>
 
 <style scoped>
-
-
-.logo{
-
-    margin-bottom:80px;
-
-    font-size: clamp(60px, 17.5vw, 140px);
-
-    font-family:Bangers,cursive;
-
-    color:black;
-
-    text-shadow:
-    5px 5px white,
-    10px 10px black;
+.home-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 360px;
+  width: 100%;
 }
 
-.red-button + .red-button{
-    margin-top: 20px;
+.title {
+  font-size: 38px;
+  margin-bottom: 2px;
 }
 
+.subtitle {
+  margin-bottom: 16px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.actions button {
+  width: 100%;
+}
 </style>
