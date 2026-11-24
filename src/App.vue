@@ -1,17 +1,17 @@
 <script setup>
 import { ref } from "vue"
 
-
 import HomeScreen from "./components/HomeScreen.vue"
 import TutorialPrompt from "./components/TutorialPrompt.vue"
 import TutorialScreen from "./components/TutorialScreen.vue"
 import ModeSelect from "./components/ModeSelect.vue"
 import Game from "./components/Game.vue"
 import Pelea from "./components/Pelea.vue"
+import Torneo from "./components/Torneo.vue"
 import Ranking from "./components/Ranking.vue"
 
 const screen = ref("home")
-const gameMode = ref(null)
+const gameMode = ref("teams")
 const equipoJugador = ref([])
 const equipoRival = ref([])
 
@@ -36,72 +36,81 @@ function openModes() {
 }
 
 function startGame(mode) {
-    gameMode.value = mode
+  gameMode.value = mode
+  if (mode === "tournament") {
+    screen.value = "torneo"
+  } else {
     screen.value = "game"
+  }
 }
 
 function recibirEquipo(datos) {
-
-    equipoJugador.value = datos.equipo
-    equipoRival.value = datos.rival
-    screen.value = "pelea"
-
-    console.log("Screen:", screen.value)
+  equipoJugador.value = datos.equipo
+  equipoRival.value = datos.rival
+  screen.value = "pelea"
 }
-
 </script>
 
 <template>
+  <main>
+    <Transition name="page" mode="out-in">
+      <HomeScreen
+        v-if="screen === 'home'"
+        key="home"
+        @play="openTutorialQuestion"
+        @ranking="screen = 'ranking'"
+      />
 
-<HomeScreen
-    v-if="screen === 'home'"
-    @play="openTutorialQuestion"
-    @ranking="screen = 'ranking'"
-/>
+      <TutorialPrompt
+        v-else-if="screen === 'tutorialPrompt'"
+        key="tutorialPrompt"
+        @yes="startTutorial"
+        @no="skipTutorial"
+        @back="goHome"
+      />
 
-<TutorialPrompt
-    v-else-if="screen === 'tutorialPrompt'"
-    @yes="startTutorial"
-    @no="skipTutorial"
-    @back="goHome"
-/>
+      <TutorialScreen
+        v-else-if="screen === 'tutorial'"
+        key="tutorial"
+        @continue="openModes"
+        @back="openTutorialQuestion"
+      />
 
-<TutorialScreen
-    v-else-if="screen === 'tutorial'"
-    @continue="openModes"
-    @back="screen='tutorialPrompt'"
-/>
+      <ModeSelect
+        v-else-if="screen === 'modes'"
+        key="modes"
+        @back="goHome"
+        @select="startGame"
+      />
 
-<ModeSelect
-    v-else-if="screen === 'modes'"
-    @back="screen='tutorialPrompt'"
-    @select="startGame"
-/>
+      <Game
+        v-else-if="screen === 'game'"
+        key="game"
+        :mode="gameMode"
+        @back="openModes"
+        @enviar-equipo="recibirEquipo"
+      />
 
-<Game
-    v-else-if="screen === 'game'"
-    :mode="gameMode"
-    @back="screen='modes'"
-    @enviar-equipo="recibirEquipo"
-/>
+      <Pelea
+        v-else-if="screen === 'pelea'"
+        key="pelea"
+        :equipo="equipoJugador"
+        :rival="equipoRival"
+        @ver-ranking="screen = 'ranking'"
+      />
 
-<Pelea
-    v-else-if="screen === 'pelea'"
-    :equipo="equipoJugador"
-    :rival="equipoRival"
-    @ver-ranking="screen = 'ranking'"
-/>
+      <Torneo
+        v-else-if="screen === 'torneo'"
+        key="torneo"
+        @back="openModes"
+        @ver-ranking="screen = 'ranking'"
+      />
 
-<Ranking
-    v-else-if="screen === 'ranking'"
-    @back="goHome"
-/>
-
+      <Ranking
+        v-else-if="screen === 'ranking'"
+        key="ranking"
+        @back="goHome"
+      />
+    </Transition>
+  </main>
 </template>
-
-
-<style scoped>
-    body{
-        background-image: url(/imagenes/img2.png)
-    }
-</style>

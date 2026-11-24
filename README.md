@@ -1,38 +1,29 @@
-# 7a0
+# VERSUS
 
-This template should help get you started developing with Vue 3 in Vite.
+Juego web de enfrentamiento por turnos y simulación de combates.
 
-## Recommended IDE Setup
+## Integrantes del Proyecto
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Back-end:** Patricio Gimenez & Valentín Sanchez
+- **Front-end:** Fidel Zarza & Selene Villalba
 
-## Recommended Browser Setup
+---
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Requisitos y Configuración
 
-## Customize configuration
+1. **Instalación de dependencias:**
+   ```sh
+   npm install
+   ```
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+2. **Iniciar servidor de desarrollo:**
+   - Opción 1: Ejecutar el archivo `iniciar.bat`
+   - Opción 2: Correr por consola:
+     ```sh
+     npm run dev
+     ```
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+3. **Compilar para producción:**
+   ```sh
+   npm run build
+   ```

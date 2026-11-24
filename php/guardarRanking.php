@@ -4,11 +4,13 @@ require_once "conexion.php";
 
 $datos = json_decode(file_get_contents("php://input"), true);
 
+// Validar datos minimos requeridos (equipo de 1 a 3 integrantes)
 if (
     !isset($datos["usuario"], $datos["poder"], $datos["equipo"]) ||
     !is_string($datos["usuario"]) ||
     !is_array($datos["equipo"]) ||
-    count($datos["equipo"]) !== 3
+    count($datos["equipo"]) < 1 ||
+    count($datos["equipo"]) > 3
 ) {
     http_response_code(400);
     echo json_encode(["error" => "Datos incompletos"]);
@@ -27,14 +29,14 @@ if ($usuario === "" || mb_strlen($usuario) > 100) {
 try {
     $pdo->beginTransaction();
 
-    // Guardar el ranking
+    // Guardar el registro de ranking
     $stmt = $pdo->prepare(
         "INSERT INTO ranking (usuario, poder) VALUES (?, ?)"
     );
     $stmt->execute([$usuario, $poder]);
     $id = (int) $pdo->lastInsertId();
 
-    // Guardar los 3 personajes del equipo
+    // Guardar los integrantes del equipo
     $stmt = $pdo->prepare(
         "INSERT INTO equipo_personajes (fk_ranking, fk_personaje) VALUES (?, ?)"
     );
